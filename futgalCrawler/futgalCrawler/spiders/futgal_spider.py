@@ -16,10 +16,25 @@ from  futgalCrawler.items import FutgalcrawlerItem, MatchItem
 class FutgalSpiderSpider(scrapy.Spider):
     name = "futgal_spider"
     allowed_domains = ["www.futgal.es"]
-    start_urls = ["https://www.futgal.es/pnfg/NPcd/NFG_CmpJornada?cod_primaria=1000120&CodCompeticion=20005937&CodGrupo=22011727&CodTemporada=20&CodJornada=6&Sch_Codigo_Delegacion=3&codigo_tipo_juego=1"]
+    start_urls = ["https://www.futgal.es/pnfg/NPcd/NFG_Mov_LstGruposCompeticion?cod_primaria=&buscar=1&codcompeticion=20005965&rt=1"]
+    #start_urls = ["https://www.futgal.es/pnfg/NPcd/NFG_CmpJornada?cod_primaria=1000120&CodCompeticion=20005937&CodGrupo=22011727&CodTemporada=20&CodJornada=6&Sch_Codigo_Delegacion=3&codigo_tipo_juego=1"]
     #start_urls = ["https://www.futgal.es/pnfg/NPcd/NFG_CmpJornada?cod_primaria=1000120&CodCompeticion=20005937&CodGrupo=22011727&CodTemporada=20&CodJornada=4&Sch_Codigo_Delegacion=3&Sch_Tipo_Juego="]
-    
+
     def parse(self, response):
+        # Extraer los enlaces a cada grupo
+        grupo_links = response.xpath('//a[contains(@href, "NFG_CmpJornada")]/@href').getall()
+
+        formatted_links = "\n".join(grupo_links)  # Une los enlaces con salto de línea
+        total_links = len(grupo_links)  # Cuenta el total de enlaces
+    
+        # Registra la información
+        self.logger.info(f"Enlaces extraídos:\n{formatted_links}\n\nTotal de enlaces: {total_links}\n")
+
+        for link in grupo_links:
+            full_link = response.urljoin(link)  # Convierte el enlace relativo en absoluto
+            yield scrapy.Request(full_link, callback=self.parse_partidos)
+
+    def parse_partidos(self, response):
         partidos = response.xpath('//table')
 
         for index, partido in enumerate(partidos):

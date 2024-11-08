@@ -50,6 +50,11 @@ class FutgalSpiderSpider(scrapy.Spider):
     def parse_partidos(self, response):
         partidos = response.xpath('//table')
 
+        all_h3_texts = response.xpath('//div[contains(@class, "col-sm-12")]/h3/strong/text()').getall()
+        season = next((text for text in all_h3_texts if "Temporada" in text), None)
+        match_week = next((text for text in all_h3_texts if "Jornada" in text), None)
+        group = next((text for text in all_h3_texts if text != season and text != match_week), None)
+
         current_url = response.url
         parsed_url = urlparse(current_url)
         query_params = parse_qs(parsed_url.query)
@@ -66,6 +71,9 @@ class FutgalSpiderSpider(scrapy.Spider):
             match['date'] = partido.xpath('.//span[contains(@class, "horario")][1]/text()').get()
             match['time'] = partido.xpath('.//span[contains(@class, "horario")][2]/text()').get()
             match['field'] = partido.xpath('.//tr[2]/td[contains(@colspan, "9")]//a/text()').get()
+            match['season'] = season
+            match['group'] = group
+            match['match_week'] = match_week
             
             raw_referee = partido.xpath('.//tr[2]/td[contains(@colspan, "9")]//span[@class= "font_widgetL"]/text()').getall()
             clean_referee = [a.strip() for a in raw_referee if a.strip()]

@@ -18,5 +18,9 @@ class MatchItem(scrapy.Item):
     date = scrapy.Field()
     time = scrapy.Field()
     field = scrapy.Field()
+    field_type = scrapy.Field()
     referee = scrapy.Field()
+    season = scrapy.Field()
+    group = scrapy.Field()
+    match_week = scrapy.Field()
     pass

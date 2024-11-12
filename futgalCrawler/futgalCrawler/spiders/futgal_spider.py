@@ -15,6 +15,7 @@ from urllib.parse import urlparse, parse_qs, urlencode, urlunparse
         #yield item
 
 class FutgalSpiderSpider(scrapy.Spider):
+    #handle_httpstatus_list = [302]
     name = "futgal_spider"
     #allowed_domains = ["www.fexfutbol.com"]
     allowed_domains = ["www.futgal.es"]
@@ -50,11 +51,20 @@ class FutgalSpiderSpider(scrapy.Spider):
     def parse_partidos(self, response):
         partidos = response.xpath('//table')
 
-        all_h3_texts = response.xpath('//div[contains(@class, "col-sm-12")]/h3/strong/text()').getall()
-        season = next((text for text in all_h3_texts if "Temporada" in text), None)
-        match_week = next((text for text in all_h3_texts if "Jornada" in text), None)
-        group = next((text for text in all_h3_texts if text != season and text != match_week), None)
+        all_h3_texts = response.xpath('//div[contains(@class, "col-sm-12")]/h3//text()').getall()
 
+        # Limpiar los espacios innecesarios (eliminar espacios al principio y al final de los textos)
+        all_h3_texts = [text.strip() for text in all_h3_texts if text.strip()]
+
+        print("Todos los textos en h3:")
+        print(all_h3_texts)
+
+        season = " ".join(all_h3_texts[0].split()[1:]).strip()
+        match_week = all_h3_texts[3]
+        category_and_group = all_h3_texts[1]
+        category = " ".join(category_and_group.split()[:2]).strip()
+        group = " ".join(category_and_group.split()[2:]).strip()
+        
         current_url = response.url
         parsed_url = urlparse(current_url)
         query_params = parse_qs(parsed_url.query)
@@ -65,15 +75,29 @@ class FutgalSpiderSpider(scrapy.Spider):
             if index == 0:
                 continue
 
+            match_result = ""
+
+            # Extraemos los resultados de los dos equipos (el primer y segundo número)
+            result = partido.xpath('.//td[contains(@class, "resultado")]//text()').getall()
+
+            # Si encontramos dos números (resultado del partido)
+            if len(result) == 2:
+                home_score = result[0].strip()  # Primer número (por ejemplo, 2)
+                away_score = result[1].strip()  # Segundo número (por ejemplo, 1)
+
+                match_result = f"{home_score}-{away_score}"
+
             match = MatchItem()
-            match['home_team'] = partido.xpath('.//td[1]//a/text()').get()
-            match['away_team'] = partido.xpath('.//td[3]//a/text()').get()
-            match['date'] = partido.xpath('.//span[contains(@class, "horario")][1]/text()').get()
-            match['time'] = partido.xpath('.//span[contains(@class, "horario")][2]/text()').get()
-            match['field'] = partido.xpath('.//tr[2]/td[contains(@colspan, "9")]//a/text()').get()
+            match['home_team'] = partido.xpath('.//td[1]//a/text()').get().strip() if partido.xpath('.//td[1]//a/text()').get() else None
+            match['away_team'] = partido.xpath('.//td[3]//a/text()').get().strip() if partido.xpath('.//td[3]//a/text()').get() else None
+            match['date'] = partido.xpath('.//span[contains(@class, "horario")][1]/text()').get().strip() if partido.xpath('.//span[contains(@class, "horario")][1]/text()').get() else None
+            match['time'] = partido.xpath('.//span[contains(@class, "horario")][2]/text()').get().strip() if partido.xpath('.//span[contains(@class, "horario")][2]/text()').get() else None
+            match['field'] = partido.xpath('.//tr[2]/td[contains(@colspan, "9")]//a/text()').get().strip() if partido.xpath('.//tr[2]/td[contains(@colspan, "9")]//a/text()').get() else None
             match['season'] = season
+            match['category'] = category
             match['group'] = group
             match['match_week'] = match_week
+            match['result'] = match_result
             
             raw_referee = partido.xpath('.//tr[2]/td[contains(@colspan, "9")]//span[@class= "font_widgetL"]/text()').getall()
             clean_referee = [a.strip() for a in raw_referee if a.strip()]

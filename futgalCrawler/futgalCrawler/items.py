@@ -21,6 +21,8 @@ class MatchItem(scrapy.Item):
     field_type = scrapy.Field()
     referee = scrapy.Field()
     season = scrapy.Field()
+    category = scrapy.Field()
     group = scrapy.Field()
     match_week = scrapy.Field()
+    result = scrapy.Field()
     pass

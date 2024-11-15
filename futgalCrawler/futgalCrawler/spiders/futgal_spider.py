@@ -2,18 +2,6 @@ import scrapy
 from  futgalCrawler.items import FutgalcrawlerItem, MatchItem
 from urllib.parse import urlparse, parse_qs, urlencode, urlunparse
 
-
-#class FutgalSpiderSpider(scrapy.Spider):
-    #name = "futgal_spider"
-    #allowed_domains = ["www.futgal.es"]
-    #start_urls = ["https://www.futgal.es/pnfg/NPcd/NFG_CmpPartido?cod_primaria=1000120&CodActa=1193585&cod_acta=1193585"]
-
-    #def parse(self, response):
-        #item = FutgalcrawlerItem()
-        #item['team'] = response.css('div.font_widgetL::text').get()
-        
-        #yield item
-
 class FutgalSpiderSpider(scrapy.Spider):
     #handle_httpstatus_list = [302]
     name = "futgal_spider"
@@ -75,18 +63,6 @@ class FutgalSpiderSpider(scrapy.Spider):
             if index == 0:
                 continue
 
-            match_result = ""
-
-            # Extraemos los resultados de los dos equipos (el primer y segundo número)
-            result = partido.xpath('.//td[contains(@class, "resultado")]//text()').getall()
-
-            # Si encontramos dos números (resultado del partido)
-            if len(result) == 2:
-                home_score = result[0].strip()  # Primer número (por ejemplo, 2)
-                away_score = result[1].strip()  # Segundo número (por ejemplo, 1)
-
-                match_result = f"{home_score}-{away_score}"
-
             match = MatchItem()
             match['home_team'] = partido.xpath('.//td[1]//a/text()').get().strip() if partido.xpath('.//td[1]//a/text()').get() else None
             match['away_team'] = partido.xpath('.//td[3]//a/text()').get().strip() if partido.xpath('.//td[3]//a/text()').get() else None
@@ -97,7 +73,6 @@ class FutgalSpiderSpider(scrapy.Spider):
             match['category'] = category
             match['group'] = group
             match['match_week'] = match_week
-            match['result'] = match_result
             
             raw_referee = partido.xpath('.//tr[2]/td[contains(@colspan, "9")]//span[@class= "font_widgetL"]/text()').getall()
             clean_referee = [a.strip() for a in raw_referee if a.strip()]
@@ -122,11 +97,3 @@ class FutgalSpiderSpider(scrapy.Spider):
             next_jornada_url = f"/pnfg/NPcd/NFG_CmpJornada?cod_primaria=1000120&CodCompeticion={cod_competicion}&CodGrupo={grupo}&CodTemporada={cod_temporada}&CodJornada={next_jornada}"
 
             yield scrapy.Request(response.urljoin(next_jornada_url), callback=self.parse_partidos)
-
-
-#    def parse(self, response):
- #       for futgal in response.css('div.page-wrapper div.page-wrapper-row full-height div.page-wrapper-middle div.page-container div.page-content-wrapper div.page-content div.container div.row nova_text div.dashboard-stat grey div.details div.desc table.table table-stripped table-hover'):
-  #          item = FutgalcrawlerItem()
-   #         item['team'] = futgal.css('tr::text').get()
-
-    #        yield item

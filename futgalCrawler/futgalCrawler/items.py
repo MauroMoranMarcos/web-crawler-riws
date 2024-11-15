@@ -24,5 +24,11 @@ class MatchItem(scrapy.Item):
     category = scrapy.Field()
     group = scrapy.Field()
     match_week = scrapy.Field()
-    result = scrapy.Field()
+    pass
+
+class FieldItem(scrapy.Item):
+    name = scrapy.Field()
+    direction = scrapy.Field()
+    city = scrapy.Field()
+    type = scrapy.Field()
     pass

@@ -1,1 +1,5 @@
 Casos de uso utilizando web de Futgal:
+
+- Búsqueda y filtrado de campos por nombre, localidad y tipo de suelo.
+- Búsqueda y filtrado de partidos por campo, árbitro, equipos, categoría, grupo, jornada?
+- Búsqueda y filtrado de goleadores por categoría, grupo, nombre de jugador y equipo.

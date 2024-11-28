@@ -1,2 +1,4 @@
 *.json
+# No ignora el archivo combined_matches.json
+!combined_matches.json
 *.pyc

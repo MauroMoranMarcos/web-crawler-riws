@@ -1,4 +1,12 @@
 *.json
-# No ignora el archivo combined_matches.json
-!combined_matches.json
 *.pyc
+*.log
+.env
+.yarn/
+bin/
+node_modules/
+yarn.lock
+# No ignora el archivo combined_matches.json, package.json y engine.json
+!combined_matches.json
+!package.json
+!engine.json

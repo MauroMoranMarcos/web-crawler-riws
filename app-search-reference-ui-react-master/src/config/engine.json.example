@@ -1,0 +1,26 @@
+{
+  "endpointBase": "https://search-ui-sandbox.ent.us-central1.gcp.cloud.es.io",
+  "engineName": "partidos",
+  "searchKey": "search-nyxkw1fuqex9qjhfvatbqfmw",
+  "searchFields": ["home_team", "away_team", "referee"],
+  "resultFields": [
+    "id",
+    "home_team",
+    "away_team",
+    "date",
+    "time",
+    "field",
+    "field_type",
+    "referee",
+    "season",
+    "group",
+    "match_week",
+    "nps_link"
+  ],
+  "querySuggestFields": ["home_team"],
+  "titleField": "title",
+  "urlField": "nps_link",
+  "thumbnailField": "image_url",
+  "sortFields": ["title", "states"],
+  "facets": ["states", "world_heritage_site"]
+}

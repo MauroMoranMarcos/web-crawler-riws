@@ -5,7 +5,7 @@ from urllib.parse import urlparse, parse_qs, urlencode, urlunparse
 class FutgalSpiderSpider(scrapy.Spider):
     name = "matchweek_spider"
     allowed_domains = ["www.futgal.es"]
-    start_urls = ["https://www.futgal.es/pnfg/NPcd/NFG_Mov_LstGruposCompeticion?cod_primaria=&buscar=1&codcompeticion=20005937&rt=1"]
+    start_urls = ["https://www.futgal.es/pnfg/NPcd/NFG_Mov_LstGruposCompeticion?cod_primaria=&buscar=1&codcompeticion=20005965&rt=1"]
 
     def parse(self, response):
         # Extraer los enlaces a cada grupo
@@ -19,7 +19,7 @@ class FutgalSpiderSpider(scrapy.Spider):
             query_params = parse_qs(parsed_url.query)
 
             # Establece CodJornada=1
-            query_params['CodJornada'] = ['34']
+            query_params['CodJornada'] = ['35']
 
             # Reconstruye el enlace con los nuevos parámetros
             new_query = urlencode(query_params, doseq=True)

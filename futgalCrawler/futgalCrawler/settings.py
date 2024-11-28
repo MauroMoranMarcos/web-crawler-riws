@@ -62,11 +62,11 @@ ROBOTSTXT_OBEY = False
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
+
 ITEM_PIPELINES = {
-    "futgalCrawler.pipelines.FutgalcrawlerPipeline": 1,
-    "futgalCrawler.pipelines.FieldsCrawlerPipeline": 2,
-    "futgalCrawler.pipelines.GoalscorersCrawlerPipeline": 3,
+    "futgalCrawler.pipelines.DynamicPipeline": 1,
 }
+
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html

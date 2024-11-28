@@ -8,6 +8,26 @@
 from itemadapter import ItemAdapter
 import json
 
+class DynamicPipeline:
+    def open_spider(self, spider):
+        # El nombre del archivo es dinámico basado en el nombre del spider
+        self.file = open(f"{spider.name}.json", "w")
+        self.file.write("[")
+        self.first_item = True
+
+    def close_spider(self, spider):
+        self.file.write("]\n")
+        self.file.close()
+
+    def process_item(self, item, spider):
+        if not self.first_item:
+            self.file.write(",\n")
+        self.first_item = False
+        line = json.dumps(dict(item), indent=4)
+        self.file.write(line)
+        return item
+
+
 
 class FutgalcrawlerPipeline:
     def open_spider(self, spider):

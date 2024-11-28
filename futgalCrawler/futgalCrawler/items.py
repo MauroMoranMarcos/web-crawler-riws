@@ -32,3 +32,12 @@ class FieldItem(scrapy.Item):
     city = scrapy.Field()
     type = scrapy.Field()
     pass
+
+class GoalscorerItem(scrapy.Item):
+    name = scrapy.Field()
+    team = scrapy.Field()
+    category = scrapy.Field()
+    group = scrapy.Field()
+    games_played = scrapy.Field()
+    goals = scrapy.Field()
+    goal_ratio = scrapy.Field()

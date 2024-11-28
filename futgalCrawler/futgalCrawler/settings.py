@@ -65,6 +65,7 @@ ROBOTSTXT_OBEY = False
 ITEM_PIPELINES = {
     "futgalCrawler.pipelines.FutgalcrawlerPipeline": 1,
     "futgalCrawler.pipelines.FieldsCrawlerPipeline": 2,
+    "futgalCrawler.pipelines.GoalscorersCrawlerPipeline": 3,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

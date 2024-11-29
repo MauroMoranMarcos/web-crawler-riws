@@ -1,0 +1,7 @@
+.custom-result {
+    border: 2px solid #007bff; /* Color del borde */
+    padding: 15px; /* Espaciado dentro del borde */
+    border-radius: 8px; /* Bordes redondeados */
+    margin: 10px 0; /* Espaciado fuera del borde */
+    background-color: #f9f9f9; /* Fondo gris claro */
+  }

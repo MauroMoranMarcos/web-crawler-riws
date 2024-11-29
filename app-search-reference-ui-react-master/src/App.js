@@ -1,4 +1,5 @@
 import React from "react";
+import './styles.css';
 
 import ElasticsearchAPIConnector from "@elastic/search-ui-elasticsearch-connector";
 
@@ -48,7 +49,13 @@ const CustomResultView = ({ result }) => {
     <div className="custom-result">
       <h2>{`${homeTeam} - ${awayTeam}`}</h2>
       {/* Puedes incluir más detalles aquí, si es necesario */}
+      <p>Temporada: {result.season?.raw}</p>
+      <p>Categoría: {result.category?.raw}</p>
+      <p>Grupo: {result.group?.raw}</p>
+      <p>Jornada: {result.match_week?.raw}</p>
       <p>Fecha: {result.date?.raw}</p>
+      <p>Hora: {result.time?.raw}</p>
+      <p>Campo: {result.field?.raw}</p>
       <p>Árbitro: {result.referee?.raw}</p>
     </div>
   );

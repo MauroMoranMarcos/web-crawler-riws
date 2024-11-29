@@ -17,10 +17,10 @@ class FieldsSpider(scrapy.Spider):
             rows =  response.xpath('//table//tr')
 
             crawled_field = FieldItem()
-            crawled_field['name'] = field.xpath('.//td[1]/a/text()').get()
-            crawled_field['direction'] = field.xpath('.//td[2]/text()').get()
-            crawled_field['city'] = field.xpath('.//td[3]/text()').get()
-            crawled_field['type'] = field.xpath('.//td[5]/text()').get()
+            crawled_field['name'] = field.xpath('.//td[1]/a/text()').get().strip() if field.xpath('.//td[1]/a/text()').get() else None
+            crawled_field['direction'] = field.xpath('.//td[2]/text()').get().strip() if field.xpath('.//td[2]/text()').get() else None
+            crawled_field['city'] = field.xpath('.//td[3]/text()').get().strip() if field.xpath('.//td[3]/text()').get() else None
+            crawled_field['type'] = field.xpath('.//td[5]/text()').get().strip() if field.xpath('.//td[5]/text()').get() else None
 
             if crawled_field['name']:
                 yield crawled_field

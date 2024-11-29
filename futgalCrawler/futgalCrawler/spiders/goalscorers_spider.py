@@ -13,8 +13,8 @@ class GoalscorersSpider(scrapy.Spider):
 
         # Lista de categorías permitidas
         categorias = [
-            "TERCERA FUTGAL",
-            "SEGUNDA FUTGAL",
+            "https://www.futgal.es/pnfg/NPcd/NFG_Mov_LstGruposCompeticion?cod_primaria=&buscar=1&codcompeticion=20005937&goles=1",
+            "https://www.futgal.es/pnfg/NPcd/NFG_Mov_LstGruposCompeticion?cod_primaria=&buscar=1&codcompeticion=20005965&goles=1",
         ]
 
         # Construir expresión XPath que coincida con cualquiera de las categorías permitidas
@@ -29,7 +29,7 @@ class GoalscorersSpider(scrapy.Spider):
         # Registra la información
         self.logger.info(f"Enlaces extraídos:\n{formatted_links}\n\nTotal de enlaces: {total_links}\n")
 
-        for link in grupo_links:
+        for link in categorias:
             full_link = response.urljoin(link)
             yield scrapy.Request(url=full_link, callback=self.parse_grupo_links)
             

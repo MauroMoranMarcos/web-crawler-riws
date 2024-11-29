@@ -53,10 +53,13 @@ const CustomResultView = ({ result }) => {
       <p>Categoría: {result.category?.raw}</p>
       <p>Grupo: {result.group?.raw}</p>
       <p>Jornada: {result.match_week?.raw}</p>
+      <p>Árbitro: {result.referee?.raw}</p>
       <p>Fecha: {result.date?.raw}</p>
       <p>Hora: {result.time?.raw}</p>
       <p>Campo: {result.field?.raw}</p>
-      <p>Árbitro: {result.referee?.raw}</p>
+      <p>Superficie: {result.field_type?.raw}</p>
+      <p>Localidad: {result.field_city?.raw}</p>
+      <p>Dirección: {result.field_direction?.raw}</p>
     </div>
   );
 };

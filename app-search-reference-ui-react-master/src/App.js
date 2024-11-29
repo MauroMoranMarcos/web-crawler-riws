@@ -45,6 +45,57 @@ const CustomResultView = ({ result }) => {
   const homeTeam = result.home_team?.raw || "Equipo local";
   const awayTeam = result.away_team?.raw || "Equipo visitante";
 
+  const homeScorers = [
+    {
+      name: result.home_team_goalscorer1_name?.raw,
+      goals: result.home_team_goalscorer1_goals?.raw,
+      games: result.home_team_goalscorer1_games_played?.raw,
+      ratio: result.home_team_goalscorer1_goal_ratio?.raw,
+    },
+    {
+      name: result.home_team_goalscorer2_name?.raw,
+      goals: result.home_team_goalscorer2_goals?.raw,
+      games: result.home_team_goalscorer2_games_played?.raw,
+      ratio: result.home_team_goalscorer2_goal_ratio?.raw,
+    },
+    {
+      name: result.home_team_goalscorer3_name?.raw,
+      goals: result.home_team_goalscorer3_goals?.raw,
+      games: result.home_team_goalscorer3_games_played?.raw,
+      ratio: result.home_team_goalscorer3_goal_ratio?.raw,
+    },
+  ];
+
+  const awayScorers = [
+    {
+      name: result.away_team_goalscorer1_name?.raw,
+      goals: result.away_team_goalscorer1_goals?.raw,
+      games: result.away_team_goalscorer1_games_played?.raw,
+      ratio: result.away_team_goalscorer1_goal_ratio?.raw,
+    },
+    {
+      name: result.away_team_goalscorer2_name?.raw,
+      goals: result.away_team_goalscorer2_goals?.raw,
+      games: result.away_team_goalscorer2_games_played?.raw,
+      ratio: result.away_team_goalscorer2_goal_ratio?.raw,
+    },
+    {
+      name: result.away_team_goalscorer3_name?.raw,
+      goals: result.away_team_goalscorer3_goals?.raw,
+      games: result.away_team_goalscorer3_games_played?.raw,
+      ratio: result.away_team_goalscorer3_goal_ratio?.raw,
+    },
+  ];
+
+  const renderScorers = (scorers) =>
+    scorers
+      .filter((scorer) => scorer.name) // Filtrar los goleadores no definidos
+      .map((scorer, index) => (
+        <li key={index}>
+          <strong>{scorer.name}</strong>: {scorer.goals} goles en {scorer.games} partidos ({scorer.ratio} goles/partido)
+        </li>
+      ));
+
   return (
     <div className="custom-result">
       <h2>{`${homeTeam} - ${awayTeam}`}</h2>
@@ -60,6 +111,18 @@ const CustomResultView = ({ result }) => {
       <p>Superficie: {result.field_type?.raw}</p>
       <p>Localidad: {result.field_city?.raw}</p>
       <p>Dirección: {result.field_direction?.raw}</p>
+
+      <div className="scorers-section">
+        <h3>Máximos goleadores:</h3>
+        <div className="team-scorers">
+          <h4>{homeTeam}</h4>
+          <ul>{renderScorers(homeScorers)}</ul>
+        </div>
+        <div className="team-scorers">
+          <h4>{awayTeam}</h4>
+          <ul>{renderScorers(awayScorers)}</ul>
+        </div>
+      </div>
     </div>
   );
 };
@@ -67,8 +130,8 @@ const CustomResultView = ({ result }) => {
 export default function App() {
   return (
     <SearchProvider config={config}>
-      <WithSearch mapContextToProps={({ wasSearched }) => ({ wasSearched })}>
-        {({ wasSearched }) => {
+      <WithSearch mapContextToProps={({ wasSearched, searchTerm }) => ({ wasSearched, searchTerm })}>
+        {({ wasSearched, searchTerm }) => {
           return (
             <div className="App">
               <ErrorBoundary>

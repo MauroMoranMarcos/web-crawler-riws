@@ -10,7 +10,7 @@ index_name = "partidos"
 mapping = {
     "mappings": {
         "properties": {
-            "home_team": {"type": "text"},
+            "home_team": {"type": "text", "fields": {"suggest": {"type": "completion"}}},
             "home_team_goalscorer1_name": {"type": "text"},
             "home_team_goalscorer1_games_played": {"type": "float"},
             "home_team_goalscorer1_goals": {"type": "float"},
@@ -23,7 +23,7 @@ mapping = {
             "home_team_goalscorer3_games_played": {"type": "float"},
             "home_team_goalscorer3_goals": {"type": "float"},
             "home_team_goalscorer3_goal_ratio": {"type": "float"},
-            "away_team": {"type": "text"},
+            "away_team": {"type": "text", "fields": {"suggest": {"type": "completion"}}},
             "away_team_goalscorer1_name": {"type": "text"},
             "away_team_goalscorer1_games_played": {"type": "float"},
             "away_team_goalscorer1_goals": {"type": "float"},
@@ -38,7 +38,7 @@ mapping = {
             "away_team_goalscorer3_goal_ratio": {"type": "float"},
             "date": {"type": "date"},
             "time": {"type": "text"},
-            "field": {"type": "text"},
+            "field": {"type": "text", "fields": {"suggest": {"type": "completion"}}},
             "field_type": {"type": "text"},
             "field_direction": {"type": "text"},
             "field_city": {"type": "text"},

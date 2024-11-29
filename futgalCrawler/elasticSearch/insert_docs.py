@@ -40,6 +40,7 @@ for i, match in enumerate(matches_data, start=1):
     time_value = (match.get("time") or "").strip()
     field_value = (match.get("field") or "").strip()
     referee_value = (match.get("referee") or "").strip()
+    category_value = (match.get("category") or "").strip()
 
     # Buscamos la información asociada al campo de juego en el fichero fields_spider.json
     with open('../futgalCrawler/fields_spider.json', 'r', encoding='utf-8') as fields_file:
@@ -120,6 +121,7 @@ for i, match in enumerate(matches_data, start=1):
         "field_direction": field_direction_value,
         "field_city": field_city_value,
         "referee": referee_value,
+        "category": category_value,
         "season": match.get("season", "").strip(),
         "group": match.get("group", ""),
         "match_week": match.get("match_week", "")

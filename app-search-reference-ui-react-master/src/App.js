@@ -127,21 +127,11 @@ const CustomResultView = ({ result }) => {
   );
 };
 
-const formatTimestampDate = (timestamp) => {
-  if (!timestamp) return "Fecha no disponible";
-  const date = new Date(Number(timestamp));
-  return date.toLocaleDateString("es-ES", {
-    year: "numeric",
-    month: "long", // Mostrar el mes como texto
-    day: "numeric",
-  });
-};
-
 export default function App() {
   return (
     <SearchProvider config={config}>
-      <WithSearch mapContextToProps={({ wasSearched, searchTerm }) => ({ wasSearched, searchTerm })}>
-        {({ wasSearched, searchTerm }) => {
+      <WithSearch mapContextToProps={({ wasSearched }) => ({ wasSearched })}>
+        {({ wasSearched }) => {
           return (
             <div className="App">
               <ErrorBoundary>
@@ -156,19 +146,7 @@ export default function App() {
                         />
                       )}
                       {getFacetFields().map(field => {
-                        if(field == "date") {
-                          return <Facet
-                            key={field}
-                            field={field}
-                            label={"Fecha"}
-                            values={(facetValues) =>
-                              facetValues.map((value) => ({
-                                ...value,
-                                label: formatTimestampDate(value.value),
-                              }))
-                          }
-                          />
-                        } else if(field == "match_week") {
+                        if(field == "match_week") {
                           return <Facet key={field} field={field} label={"Jornada"} />
                         } else if(field == "field_city") {
                           return <Facet key={field} field={field} label={"Localidad"} />

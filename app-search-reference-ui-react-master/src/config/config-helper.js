@@ -175,6 +175,7 @@ export function buildFacetConfigFromConfig() {
 
 export function buildSortOptionsFromConfig() {
   const config = getConfig();
+
   return [
     {
       name: "Relevance",

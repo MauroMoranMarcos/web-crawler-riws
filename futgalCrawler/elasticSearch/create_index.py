@@ -41,7 +41,7 @@ mapping = {
             "field": {"type": "text", "fields": {"suggest": {"type": "completion"}}},
             "field_type": {"type": "text"},
             "field_direction": {"type": "text"},
-            "field_city": {"type": "text"},
+            "field_city": {"type": "keyword"},
             "referee": {"type": "text"},
             "season": {"type": "text"},
             "group": {"type": "text"},

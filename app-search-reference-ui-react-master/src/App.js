@@ -170,6 +170,8 @@ export default function App() {
                           />
                         } else if(field == "match_week") {
                           return <Facet key={field} field={field} label={"Jornada"} />
+                        } else if(field == "field_city") {
+                          return <Facet key={field} field={field} label={"Localidad"} />
                         }
                       })}
                     </div>

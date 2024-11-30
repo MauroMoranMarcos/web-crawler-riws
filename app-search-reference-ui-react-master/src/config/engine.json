@@ -46,5 +46,5 @@
   "querySuggestFields": ["home_team.suggest", "away_team.suggest", "field.suggest"],
   "titleField": "home_team",
   "sortFields": ["date", "match_week"],
-  "facets": ["date", "match_week"]
+  "facets": ["date", "match_week", "field_city"]
 }

@@ -176,6 +176,27 @@ export function buildFacetConfigFromConfig() {
 export function buildSortOptionsFromConfig() {
   const config = getConfig();
 
+  console.log([
+    {
+      name: "Relevance",
+      value: "",
+      direction: ""
+    },
+    ...(config.sortFields || []).reduce((acc, sortField) => {
+      acc.push({
+        name: `${capitalizeFirstLetter(sortField)} ASC`,
+        value: sortField,
+        direction: "asc"
+      });
+      acc.push({
+        name: `${capitalizeFirstLetter(sortField)} DESC`,
+        value: sortField,
+        direction: "desc"
+      });
+      return acc;
+    }, [])
+  ])
+
   return [
     {
       name: "Relevance",

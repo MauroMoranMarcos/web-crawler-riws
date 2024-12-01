@@ -139,12 +139,12 @@ export default function App() {
                   header={<SearchBox autocompleteSuggestions={true} />}
                   sideContent={
                     <div>
-                      {wasSearched && (
+                      {/*{wasSearched && (
                         <Sorting
                           label={"Sort by"}
                           sortOptions={buildSortOptionsFromConfig()}
                         />
-                      )}
+                      )}*/}
                       {getFacetFields().map(field => {
                         if(field == "match_week") {
                           return <Facet key={field} field={field} label={"Jornada"} />

@@ -1,30 +1,30 @@
 .custom-result {
-    border: 2px solid #007bff; /* Color del borde */
-    padding: 15px; /* Espaciado dentro del borde */
-    border-radius: 8px; /* Bordes redondeados */
-    margin: 10px 0; /* Espaciado fuera del borde */
-    background-color: #f9f9f9; /* Fondo gris claro */
+    border: 2px solid #007bff;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 10px 0;
+    background-color: #f9f9f9;
   }
 
 .App {
   display: flex;
   flex-direction: row;
-  justify-content: space-between; /* Asegura que los elementos se distribuyan adecuadamente */
-  align-items: flex-start; /* Alinea elementos en la parte superior */
+  justify-content: space-between;
+  align-items: flex-start;
 }
 
 .main-content {
-  flex: 3; /* Ocupa el 75% del espacio */
+  flex: 3;
 }
 
 .similar-referees-wrapper {
-  flex: 1; /* Ocupa el 25% del espacio */
-  margin-left: 20px; /* Añade un margen para separar visualmente */
+  flex: 1;
+  margin-left: 20px;
   margin-top: 200px;
   margin-right: 20px;
   padding: 10px;
-  background-color: #f9f9f9; /* Opcional: color de fondo para diferenciar */
-  border-radius: 8px; /* Bordes redondeados */
-  border: 1px solid #000000; /* Opcional: bordes para resaltar */
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  border: 1px solid #000000;
 }
   

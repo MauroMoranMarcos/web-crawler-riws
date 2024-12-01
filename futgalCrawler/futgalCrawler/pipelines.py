@@ -10,7 +10,6 @@ import json
 
 class DynamicPipeline:
     def open_spider(self, spider):
-        # El nombre del archivo es dinámico basado en el nombre del spider
         self.file = open(f"{spider.name}.json", "w")
         self.file.write("[")
         self.first_item = True

@@ -9,7 +9,7 @@ class FieldsSpider(scrapy.Spider):
     # Start URL
     start_urls = ["https://www.futgal.es/pnfg/NPcd/NFG_LstCampos?cod_primaria=1000122&NPcd_PageLines=0"]
 
-    # Parse method to extract fields
+    # Método parse para extraer los campos
     def parse(self, response):
         fields = response.xpath('//table//tr')
 

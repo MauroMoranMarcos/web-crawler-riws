@@ -60,6 +60,5 @@ if es.indices.exists(index=index_name):
     else:
         print("Operación cancelada. El índice no se ha modificado.")
 else:
-    # Crea el íncice
     es.indices.create(index=index_name, body=mapping)
     print(f"Indice '{index_name}' creado correctamente.")

@@ -2,7 +2,7 @@ import json
 import os
 
 # Nombre de la carpeta donde están los archivos JSON
-input_folder = "./"  # Asegúrate de que sea el directorio donde están los archivos JSON
+input_folder = "./"
 output_file = "combined_matches.json"
 
 all_matches = []

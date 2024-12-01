@@ -99,7 +99,6 @@ const CustomResultView = ({ result }) => {
   return (
     <div className="custom-result">
       <h2>{`${homeTeam} - ${awayTeam}`}</h2>
-      {/* Puedes incluir más detalles aquí, si es necesario */}
       <p>Temporada: {result.season?.raw}</p>
       <p>Categoría: {result.category?.raw}</p>
       <p>Grupo: {result.group?.raw}</p>

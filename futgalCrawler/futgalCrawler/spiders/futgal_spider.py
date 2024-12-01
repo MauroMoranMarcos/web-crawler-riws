@@ -85,10 +85,10 @@ class FutgalSpiderSpider(scrapy.Spider):
         next_matchday = response.xpath('//a[contains(@class, "btn green-meadow")]/@href').get()
 
         if next_matchday:
-            # Aquí necesitas extraer los parámetros necesarios para construir la URL correcta
-            cod_competicion = query_params.get('CodCompeticion', [''])[0]  # Extrae CodCompeticion
-            grupo = query_params.get('CodGrupo', [''])[0]  # Extrae CodGrupo
-            cod_temporada = "20"  # Ajusta esto según sea necesario
+            # Extracción de la siguiente URL
+            cod_competicion = query_params.get('CodCompeticion', [''])[0]
+            grupo = query_params.get('CodGrupo', [''])[0]
+            cod_temporada = "20"
 
             # Incrementa CodJornada
             next_jornada = current_jornada + 1

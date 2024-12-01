@@ -23,10 +23,9 @@ class GoalscorersSpider(scrapy.Spider):
         # Extraer los enlaces a cada grupo
         grupo_links = response.xpath(f'//a[contains(@href, "NFG_Mov_LstGruposCompeticion") and ({textos_xpath})]/@href').getall()
 
-        formatted_links = "\n".join(grupo_links)  # Une los enlaces con salto de línea
-        total_links = len(grupo_links)  # Cuenta el total de enlaces
+        formatted_links = "\n".join(grupo_links)
+        total_links = len(grupo_links)
     
-        # Registra la información
         self.logger.info(f"Enlaces extraídos:\n{formatted_links}\n\nTotal de enlaces: {total_links}\n")
 
         for link in categorias:
@@ -39,10 +38,9 @@ class GoalscorersSpider(scrapy.Spider):
         # Extraer los enlaces a cada grupo
         grupo_links_internos = response.xpath('//a[contains(@href, "NFG_CMP_Goleadores")]/@href').getall()
 
-        formatted_links_intern = "\n".join(grupo_links_internos)  # Une los enlaces con salto de línea
-        total_links_intern = len(grupo_links_internos)  # Cuenta el total de enlaces
+        formatted_links_intern = "\n".join(grupo_links_internos)
+        total_links_intern = len(grupo_links_internos)
         
-        # Registra la información
         self.logger.info(f"Enlaces extraídos internos:\n{formatted_links_intern}\n\nTotal de enlaces internos: {total_links_intern}\n")
 
         for link_interno in grupo_links_internos:

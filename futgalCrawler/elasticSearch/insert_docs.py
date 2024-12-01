@@ -15,9 +15,7 @@ def clean_team_name(team_name):
     return team_name.replace(' "B"', '').strip()
 
 # Documentos a indexar
-
-# Importamos quotes.json
-
+# Importamos combined_matches.json
 with open('../futgalCrawler/combined_matches.json', 'r', encoding='utf-8') as matches_file:
     matches_data = json.load(matches_file)
 

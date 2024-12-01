@@ -6,7 +6,9 @@
 bin/
 node_modules/
 yarn.lock
-# No ignora el archivo combined_matches.json, package.json y engine.json
+# No ignora el archivo combined_matches.json, fields_spider.json, goalscorers.json, package.json y engine.json
 !combined_matches.json
+!fields_spider.json
+!goalscorers_spider.json
 !package.json
 !engine.json

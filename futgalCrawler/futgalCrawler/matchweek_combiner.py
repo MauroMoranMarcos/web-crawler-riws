@@ -13,8 +13,8 @@ for filename in sorted(os.listdir(input_folder)):
         file_path = os.path.join(input_folder, filename)
         try:
             with open(file_path, 'r', encoding='utf-8') as file:
-                matches = json.load(file)  # Carga los partidos del archivo actual
-                all_matches.extend(matches)  # Añade los partidos a la lista global
+                matches = json.load(file)
+                all_matches.extend(matches)
         except Exception as e:
             print(f"Error leyendo el archivo {filename}: {e}")
 

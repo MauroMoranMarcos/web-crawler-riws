@@ -5,3 +5,26 @@
     margin: 10px 0; /* Espaciado fuera del borde */
     background-color: #f9f9f9; /* Fondo gris claro */
   }
+
+.App {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between; /* Asegura que los elementos se distribuyan adecuadamente */
+  align-items: flex-start; /* Alinea elementos en la parte superior */
+}
+
+.main-content {
+  flex: 3; /* Ocupa el 75% del espacio */
+}
+
+.similar-referees-wrapper {
+  flex: 1; /* Ocupa el 25% del espacio */
+  margin-left: 20px; /* Añade un margen para separar visualmente */
+  margin-top: 200px;
+  margin-right: 20px;
+  padding: 10px;
+  background-color: #f9f9f9; /* Opcional: color de fondo para diferenciar */
+  border-radius: 8px; /* Bordes redondeados */
+  border: 1px solid #000000; /* Opcional: bordes para resaltar */
+}
+  

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import './styles.css';
 
 import ElasticsearchAPIConnector from "@elastic/search-ui-elasticsearch-connector";
@@ -129,52 +129,107 @@ const CustomResultView = ({ result }) => {
 export default function App() {
   return (
     <SearchProvider config={config}>
-      <WithSearch mapContextToProps={({ wasSearched }) => ({ wasSearched })}>
-        {({ wasSearched }) => {
+      <WithSearch mapContextToProps={({ results }) => ({ results })}>
+        {({ results }) => {
+
+          const referees = results
+          .map((result) => result.referee?.raw)
+          .filter((referee) => referee); // Filtrar valores nulos o no definidos
+
           return (
             <div className="App">
               <ErrorBoundary>
-                <Layout
-                  header={<SearchBox autocompleteSuggestions={true} />}
-                  sideContent={
-                    <div>
-                      {/*{wasSearched && (
-                        <Sorting
-                          label={"Sort by"}
-                          sortOptions={buildSortOptionsFromConfig()}
-                        />
-                      )}*/}
-                      {getFacetFields().map(field => {
-                        if(field == "match_week") {
-                          return <Facet key={field} field={field} label={"Jornada"} />
-                        } else if(field == "field_city") {
-                          return <Facet key={field} field={field} label={"Localidad"} />
-                        }
-                      })}
-                    </div>
-                  }
-                  bodyContent={
-                    <Results
-                      titleField={CustomResultView}
-                      urlField={getConfig().urlField}
-                      thumbnailField={getConfig().thumbnailField}
-                      resultView={CustomResultView}
-                      shouldTrackClickThrough={true}
-                    />
-                  }
-                  bodyHeader={
-                    <React.Fragment>
-                      {wasSearched && <PagingInfo />}
-                      {wasSearched && <ResultsPerPage />}
-                    </React.Fragment>
-                  }
-                  bodyFooter={<Paging />}
-                />
+                <div className="main-content">
+                  <Layout
+                    header={<SearchBox autocompleteSuggestions={true} />}
+                    sideContent={
+                      <div>
+                        {/*{wasSearched && (
+                          <Sorting
+                            label={"Sort by"}
+                            sortOptions={buildSortOptionsFromConfig()}
+                          />
+                        )}*/}
+                        {getFacetFields().map(field => {
+                          if(field == "match_week") {
+                            return <Facet key={field} field={field} label={"Jornada"} />
+                          } else if(field == "field_city") {
+                            return <Facet key={field} field={field} label={"Localidad"} />
+                          }
+                        })}
+                      </div>
+                    }
+                    bodyContent={
+                      <Results
+                        titleField={CustomResultView}
+                        urlField={getConfig().urlField}
+                        thumbnailField={getConfig().thumbnailField}
+                        resultView={CustomResultView}
+                        shouldTrackClickThrough={true}
+                      />
+                    }
+                    bodyHeader={
+                      <React.Fragment>
+                        {results && <PagingInfo />}
+                        {results && <ResultsPerPage />}
+                      </React.Fragment>
+                    }
+                    bodyFooter={<Paging />}
+                  />
+                </div>
+                {referees.length > 0 && (
+                  <div className="similar-referees-wrapper">
+                    <SimilarReferees referees={referees} />
+                  </div>
+                )}
               </ErrorBoundary>
             </div>
           );
         }}
       </WithSearch>
     </SearchProvider>
+  );
+}
+
+const SimilarReferees = ({referees}) => {
+  const [similarReferees, setSimilarReferees] = useState([]);
+
+  useEffect(() => {
+    console.log("Referees:", referees);
+    if (referees.length === 0) return;
+
+    const query = {
+      query: {
+        more_like_this: {
+          fields: ["referee"],
+          like: referees,
+          min_term_freq: 1,
+          max_query_terms: 12
+        }
+      }
+    };
+
+    // Ejecutamos búsqueda de similares
+    fetch("http://localhost:9200/partidos/_search", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(query)
+    }).then((response) => response.json()).then((data) => setSimilarReferees(data.hits.hits));
+  }, [referees]);
+
+  if (similarReferees.length === 0) return null;
+
+  return (
+    <div className="similar-results">
+      <h3>Partidos con árbitros similares</h3>
+      <ul>
+        {similarReferees.map((result, index) => (
+          <li key={index}>
+            <strong>{result._source.home_team} - {result._source.away_team}</strong>
+            <p>Árbitro: {result._source.referee}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
